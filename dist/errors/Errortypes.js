@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var ERR_USER_NOT_FOUND = 'USER_NOT_FOUND';
+var ERR_INVALID_PASSWORD = 'INVALID_PASSWORD';
+var ERR_INVALID_TOKEN = 'token provided is invalid';
+var ERR_DUPLICATE_EMAIL = 'DUPLICATE_EMAIL';
+exports.default = {
+    ERR_USER_NOT_FOUND: ERR_USER_NOT_FOUND,
+    ERR_INVALID_PASSWORD: ERR_INVALID_PASSWORD,
+    ERR_INVALID_TOKEN: ERR_INVALID_TOKEN,
+    ERR_DUPLICATE_EMAIL: ERR_DUPLICATE_EMAIL,
+};
