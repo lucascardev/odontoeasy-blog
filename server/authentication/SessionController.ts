@@ -40,7 +40,7 @@ class SessionController {
         // exp: Math.floor(Date.now() / 1000) + LOGIN_EXPIRATION_TIME,
         iss: "odonto-easy",
         sub: { userid: payload.id, name: payload.name, auth: true },
-        scopes: [ payload.role ]
+        scopes: [ payload.name ]
       };
 
       if (

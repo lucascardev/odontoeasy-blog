@@ -96,7 +96,7 @@ var SessionController = /** @class */ (function () {
                             // exp: Math.floor(Date.now() / 1000) + LOGIN_EXPIRATION_TIME,
                             iss: "odonto-easy",
                             sub: { userid: payload.id, name: payload.name, auth: true },
-                            scopes: [payload.role]
+                            scopes: [payload.name]
                         };
                         if (!(payload.email === email &&
                             payload.password === password)) return [3 /*break*/, 4];

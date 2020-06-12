@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url = "***"
 }
 
@@ -15,7 +15,6 @@ model User {
   id    Int     @id @default(autoincrement())
   password String 
   name  String?
-  role    Role     @default(USER)
   email String  @unique
   posts Post[]
   profile  Profile?
@@ -51,9 +50,4 @@ model CategoriesOnPosts {
   category    Category @relation(fields: [categoryId], references: [id])
   categoryId  Int      // relation scalar field (used in the `@relation` attribute above)
   @@id([postId, categoryId])
-}
-
-enum Role {
-  USER
-  MODERATOR
 }
