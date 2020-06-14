@@ -5,9 +5,9 @@
   "scripts": {
     "build:server": "tsc --project tsconfig.server.json",
     "build:next": "next build",
-    "dev": "nodemon -w server/ --exec yarn type-check",
+    "dev": "cross-env NODE_ENV=development nodemon -w server/ --exec yarn type-check",
     "build": "yarn build:next && yarn build:server",
-    "start": "node dist/server.js",
+    "start": "cross-env NODE_ENV=production node dist/server.js",
     "type-check": "tsc && node dist/server.js"
   },
   "dependencies": {
@@ -16,6 +16,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "isomorphic-fetch": "^2.2.1",
