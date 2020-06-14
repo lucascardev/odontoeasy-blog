@@ -51,13 +51,9 @@ const HomePage: React.FC<Props> = props => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  
-  const host = ctx.req.headers['x-forwarded-host'];
-  const proto = ctx.req.headers['x-forwarded-proto'];
-  const port =  ctx.req.headers['x-forwarded-port'];
-
-    const res = await fetch(`${proto}//${host}:${port}/api/feed`);
+export const getServerSideProps: GetServerSideProps = async () => {
+ 
+    const res = await fetch('https://odonto-easy.herokuapp.com/api/feed');
     const feed = await res.json();
     return { props: { feed } };
   }
