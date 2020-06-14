@@ -51,18 +51,13 @@ const HomePage: React.FC<Props> = props => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const apiUrl = (path: string, req?: NextApiRequest) => {
-    if (!req && typeof window !== "undefined") return path;
-    const host = req
-      ? req.headers["x-forwarded-host"] || req.headers.host
-      : window.location.host;
-    const proto = req
-      ? req.headers["x-forwarded-proto"] || "http"
-      : window.location.protocol.slice(0, -1);
-    return `${proto}://${host}${path}`;
-  };
-    const res = await fetch(apiUrl("/api/feed"));
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  
+  const host = ctx.req.headers['x-forwarded-host'];
+  const proto = ctx.req.headers['x-forwarded-proto'];
+  const port =  ctx.req.headers['x-forwarded-port'];
+
+    const res = await fetch(`${proto}//${host}:${port}/api/feed`);
     const feed = await res.json();
     return { props: { feed } };
   }
