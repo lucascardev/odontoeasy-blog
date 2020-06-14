@@ -59,8 +59,8 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     const port =  ctx.req.headers['x-forwarded-port'];
     const apihttps = `${proto}//${host}:${port}`
     const server = dev ? 'http://localhost:3000' : apihttps;
-    const res = await fetch(`${server}/api/feed`);
-
+    const res = await fetch(`${server}/api/feed`)
+    console.log('https:'+apihttps)
     const feed = await res.json();
     return { props: { feed } };
   } else {
