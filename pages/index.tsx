@@ -50,11 +50,23 @@ const HomePage: React.FC<Props> = props => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch('http://localhost:3000/api/feed')
-  const feed = await res.json()
-  return {
-    props: { feed },
+export const getServerSideProps: GetServerSideProps = async ctx => {
+ 
+  if (ctx.req) {
+    const dev = process.env.NODE_ENV !== 'production';
+    const host = ctx.req.headers['x-forwarded-host'];
+    const proto = ctx.req.headers['x-forwarded-proto'];
+    const port =  ctx.req.headers['x-forwarded-port'];
+    const server = dev ? 'http://localhost:3000' : proto+'//'+host+':'+port;
+    const res = await fetch(`${server}/api/feed`);
+
+    const feed = await res.json();
+    return { props: { feed } };
+  } else {
+    // otherwise we are in the browser
+    const res = await fetch(`http://localhost:3000/api/feed`);
+    const feed = await res.json();
+    return { props: { feed } };
   }
 }
 

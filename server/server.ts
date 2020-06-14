@@ -22,7 +22,7 @@ app
     })
     server.listen(PORT, (err?:any) => {
       if (err) throw err;
-      console.log(`> Ready on localhost:${PORT} - env ${process.env.NODE_ENV}`);
+      console.log(`> Ready on localhost:${PORT} - enviroment of ${process.env.NODE_ENV}`);
     });
   })
   .catch((exception) => {
