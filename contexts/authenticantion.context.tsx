@@ -76,7 +76,7 @@ export const AuthProvider = ({children}: Props) => {
     async function signIn(recived:object): Promise<object> {
       try {
         setLoading(true)
-        const response = await myapi.post("/auth/login", recived)
+        const response = await myapi.post("auth/login", recived)
         if (response.data.token) { 
         setToken(response.data.token);
          localStorage.setItem("@LUPAuth:token", response.data.token)
