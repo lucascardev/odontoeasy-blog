@@ -5,7 +5,8 @@ import Head from 'next/head';
 import fetch from 'isomorphic-unfetch';
 import Layout from '../components/Layout'
 import Post, { PostProps } from '../components/Post'
-
+import { NextApiRequest } from 'next'
+import { request } from 'http';
 
 type Props = {
   feed: PostProps[]
@@ -50,25 +51,21 @@ const HomePage: React.FC<Props> = props => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
- 
-  if (ctx.req) {
-    const dev = process.env.NODE_ENV !== 'production';
-    const host = ctx.req.headers['x-forwarded-host'];
-    const proto = ctx.req.headers['x-forwarded-proto'];
-    const port =  ctx.req.headers['x-forwarded-port'];
-    const apihttps = `${proto}//${host}:${port}`
-    const server = dev ? 'http://localhost:3000' : apihttps;
-    const res = await fetch(`${server}/api/feed`)
-    console.log('https:'+apihttps)
-    const feed = await res.json();
-    return { props: { feed } };
-  } else {
-    // otherwise we are in the browser
-    const res = await fetch(`http://localhost:3000/api/feed`);
+export const getServerSideProps: GetServerSideProps = async () => {
+  const apiUrl = (path: string, req?: NextApiRequest) => {
+    if (!req && typeof window !== "undefined") return path;
+    const host = req
+      ? req.headers["x-forwarded-host"] || req.headers.host
+      : window.location.host;
+    const proto = req
+      ? req.headers["x-forwarded-proto"] || "http"
+      : window.location.protocol.slice(0, -1);
+    return `${proto}://${host}${path}`;
+  };
+    const res = await fetch(apiUrl("/api/feed"));
     const feed = await res.json();
     return { props: { feed } };
   }
-}
+
 
 export default HomePage;
