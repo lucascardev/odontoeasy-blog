@@ -53,12 +53,10 @@ const HomePage: React.FC<Props> = props => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
 
-  const dev = process.env.NODE_ENV !== "production";
-  const URL = dev ? 'http://localhost:3000/api/feed' : 'https://odonto-easy.herokuapp.com/api/feed'
+
+  const URL = `${process.env.REACT_APP_API_URL}api/feed`
     const res = await fetch(URL);
     const feed = await res.json();
     return { props: { feed } };
   }
-
-
 export default HomePage;

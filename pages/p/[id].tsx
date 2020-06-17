@@ -9,7 +9,7 @@ import { PostProps } from '../../components/Post'
 
 
 async function publish(id: number): Promise<void> {
-  const res = await fetch(`http://localhost:3000/publish/${id}`, {
+  const res = await fetch(`${process.env.REACT_APP_API_URL}publish/${id}`, {
     method: 'PUT',
   })
   const data = await res.json()
@@ -17,7 +17,7 @@ async function publish(id: number): Promise<void> {
 }
 
 async function destroy(id: number): Promise<void> {
-  const res = await fetch(`http://localhost:3000/api/post/${id}`, {
+  const res = await fetch(`${process.env.REACT_APP_API_URL}api/post/${id}`, {
     method: 'DELETE',
   })
   const data = await res.json()
@@ -76,7 +76,7 @@ const Post: React.FC<PostProps> = props => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fetch(`http://localhost:3000/api/post/${context.params.id}`)
+  const res = await fetch(`${process.env.REACT_APP_API_URL}api/post/${context.params.id}`)
   const data = await res.json()
   return {props: { ...data }}
 }
