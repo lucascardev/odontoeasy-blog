@@ -52,8 +52,10 @@ const HomePage: React.FC<Props> = props => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
- 
-    const res = await fetch('https://odonto-easy.herokuapp.com/api/feed');
+
+  const dev = process.env.NODE_ENV !== "production";
+  const URL = dev ? 'http://localhost:3000/api/feed' : 'https://odonto-easy.herokuapp.com/api/feed'
+    const res = await fetch(URL);
     const feed = await res.json();
     return { props: { feed } };
   }

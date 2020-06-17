@@ -3,15 +3,16 @@ import { Modal } from "react-bootstrap"
 import Link from 'next/link'
 import Router, {useRouter} from 'next/router'
 import { FaArrowLeft, FaGoogle } from 'react-icons/fa'
-import theme from '../../config/theme'
+import theme from '../config/theme'
 // import myapi from '../../services/myapi'
-import { AuthContext } from '../../contexts/authenticantion.context'
+import { AuthContext } from '../contexts/authenticantion.context'
+import Layout from "../components/Layout"
 
 type Props = {
   title: string
 }
 
-const Loginmodal: React.FC<Props> = ({children, title}) => {
+const Login: React.FC<Props> = ({children, title}) => {
   const { signIn, loading } = useContext(AuthContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -32,13 +33,8 @@ const Loginmodal: React.FC<Props> = ({children, title}) => {
   }
 
   return (
-    <>
-      <a onClick={handleSignup}>{title}</a>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header style={{background: theme.colors.primarycolor}} closeButton >
-          <Modal.Title style={{background: theme.colors.primarycolor, color:  theme.colors.white}} id="modal-title">{title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body style={{background: theme.colors.secondarycolor}} id="modal-body">
+    <Layout>
+          <div className="page">
           <form onSubmit={submitData}>
           <h3>With email</h3>
           <input
@@ -72,9 +68,8 @@ const Loginmodal: React.FC<Props> = ({children, title}) => {
           </a> 
           </Link>
           </form>
-        </Modal.Body>
-      </Modal>
-      <style jsx>{`
+          </div>
+  <style jsx>{`
      #modal-title {
         color: ${theme.colors.white}
       }
@@ -84,7 +79,18 @@ const Loginmodal: React.FC<Props> = ({children, title}) => {
       h3 {
         color: ${theme.colors.white}
       }
+      .page {
+          background: ${theme.colors.white};
+          padding: 3rem;
+          display: flex;
+          flex: 1;
+          justify-content: center;
+          align-items: center;
+        }
       form {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
         padding: 1rem 2rem;
         background: ${theme.colors.secondarycolor};
       }
@@ -176,8 +182,8 @@ const Loginmodal: React.FC<Props> = ({children, title}) => {
         color: ${theme.colors.white};
       }
     `}</style>
-    </>
+    </Layout>
   );
 };
 
-export default Loginmodal;
+export default Login;

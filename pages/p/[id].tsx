@@ -9,7 +9,7 @@ import { PostProps } from '../../components/Post'
 
 
 async function publish(id: number): Promise<void> {
-  const res = await fetch(`http://localhost:3000/api/publish/${id}`, {
+  const res = await fetch(`http://localhost:3000/publish/${id}`, {
     method: 'PUT',
   })
   const data = await res.json()

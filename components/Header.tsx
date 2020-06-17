@@ -75,7 +75,10 @@ const Header: React.FC<Props> = ({ children, user, signed, loading }) => {
             </Link> */}
             {/* <a onClick={handleShow}>Login</a> */}
             <Signupmodal title="Sign up" />
-            <Loginmodal title="Log in" />
+            <Link href="/login">
+              <a data-active={isActive("/login")}>Login</a>
+            </Link>
+            {/* <Loginmodal title="Log in" /> */}
           </div>
         </>
       )}
