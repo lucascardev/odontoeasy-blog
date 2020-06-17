@@ -3,7 +3,7 @@ const cors = require ('cors');
 import next from 'next'
 require('dotenv/config')
 
-const PORT = process.env.PORT || 3000;
+
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 import routes from './routes';
@@ -20,9 +20,9 @@ app
     server.get('*', (req, res) => {
       return handle(req, res)
     })
-    server.listen(PORT, (err?:any) => {
+    server.listen(process.env.PORT || 3000, (err?:any) => {
       if (err) throw err;
-      console.log(`> Ready on localhost:${PORT} - enviroment of ${process.env.NODE_ENV}`);
+      console.log(`> Ready - enviroment of ${process.env.NODE_ENV}`);
     });
   })
   .catch((exception) => {
