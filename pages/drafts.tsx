@@ -39,11 +39,11 @@ const Drafts : React.FC<Props> = props => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}api/drafts`)
-  const drafts = await res.json()
-  return {
-    props: { drafts },
-  }
+
+  const URL = `${process.env.REACT_APP_API_URL}get/drafts`;
+  const res = await fetch(URL);
+  const drafts = await res.json();
+  return { props: { drafts } };
 }
 
 export default Drafts

@@ -6,21 +6,15 @@ import Layout from '../../components/Layout'
 import fetch from 'isomorphic-unfetch'
 import Router from 'next/router'
 import { PostProps } from '../../components/Post'
-
+import myapi from '../../services/myapi'
 
 async function publish(id: number): Promise<void> {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}publish/${id}`, {
-    method: 'PUT',
-  })
-  const data = await res.json()
+  const res = await myapi.put(`${process.env.REACT_APP_API_URL}put/posts/publish/${id}`)
   await Router.push('/')
 }
 
 async function destroy(id: number): Promise<void> {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}api/post/${id}`, {
-    method: 'DELETE',
-  })
-  const data = await res.json()
+  const res = await myapi.delete(`${process.env.REACT_APP_API_URL}posts/delete/${id}`)
   Router.push('/')
 }
 
@@ -76,7 +70,7 @@ const Post: React.FC<PostProps> = props => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}api/post/${context.params.id}`)
+  const res = await fetch(`${process.env.REACT_APP_API_URL}posts/${context.params.id}`)
   const data = await res.json()
   return {props: { ...data }}
 }
