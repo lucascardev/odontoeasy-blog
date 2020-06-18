@@ -54,7 +54,7 @@ const HomePage: React.FC<Props> = props => {
 export const getServerSideProps: GetServerSideProps = async () => {
 
 
-  const URL = `${process.env.REACT_APP_API_URL}get/feed`
+  const URL = `${process.env.REACT_APP_API_URL}/get/feed`
     const res = await fetch(URL);
     const feed = await res.json();
     return { props: { feed } };

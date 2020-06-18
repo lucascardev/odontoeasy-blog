@@ -40,7 +40,7 @@ const Drafts : React.FC<Props> = props => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
 
-  const URL = `${process.env.REACT_APP_API_URL}get/drafts`;
+  const URL = `${process.env.REACT_APP_API_URL}/get/drafts`;
   const res = await fetch(URL);
   const drafts = await res.json();
   return { props: { drafts } };

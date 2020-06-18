@@ -1,8 +1,7 @@
 import React, { createContext, useState, useEffect } from "react"
 import myapi from '../services/myapi'
 import * as auth from "../services/auth";
-import { send } from "process";
-
+import Router from 'next/router'
 
 type IUser = {
   id: number,
@@ -41,7 +40,7 @@ export const AuthProvider = ({children}: Props) => {
       async function loadStoragedData() {
         setLoading(true);
         const storagedToken = localStorage.getItem("@LUPAuth:token");
-      //   await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 2000));
         console.log("storaged token:" + storagedToken);
         if (storagedToken) {
           const initialcheck = await auth.checkToken(storagedToken);
@@ -76,7 +75,7 @@ export const AuthProvider = ({children}: Props) => {
     async function signIn(recived:object): Promise<object> {
       try {
         setLoading(true)
-        const response = await myapi.post("auth/login", recived)
+        const response = await myapi.post("/auth/login", recived)
         if (response.data.token) { 
         setToken(response.data.token);
          localStorage.setItem("@LUPAuth:token", response.data.token)
@@ -110,6 +109,7 @@ export const AuthProvider = ({children}: Props) => {
         localStorage.removeItem(k))
         setUser(null)
         setSigned(false)
+        await Router.push('/')
     }
       return (
       < AuthContext.Provider value={{ 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Head from 'next/head';
 import { GetServerSideProps } from 'next'
 import ReactMarkdown from 'react-markdown'
@@ -9,16 +9,18 @@ import { PostProps } from '../../components/Post'
 import myapi from '../../services/myapi'
 
 async function publish(id: number): Promise<void> {
-  const res = await myapi.put(`${process.env.REACT_APP_API_URL}put/posts/publish/${id}`)
+  const res = await myapi.put(`${process.env.REACT_APP_API_URL}/put/posts/publish/${id}`)
   await Router.push('/')
 }
 
 async function destroy(id: number): Promise<void> {
-  const res = await myapi.delete(`${process.env.REACT_APP_API_URL}posts/delete/${id}`)
+  const res = await myapi.delete(`${process.env.REACT_APP_API_URL}/posts/delete/${id}`)
   Router.push('/')
 }
 
 const Post: React.FC<PostProps> = props => {
+
+  const [PostID, setPostID] = useState(props.id);
  
   let title = props.title
   if (!props.published) {
@@ -47,6 +49,7 @@ const Post: React.FC<PostProps> = props => {
           Delete
         </button>
       </div>
+      <div id="disqus_thread"></div>
       <style jsx>{`
         .page {
           background: white;
@@ -70,7 +73,7 @@ const Post: React.FC<PostProps> = props => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}posts/${context.params.id}`)
+  const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/${context.params.id}`)
   const data = await res.json()
   return {props: { ...data }}
 }

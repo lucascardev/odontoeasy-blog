@@ -7,7 +7,7 @@ import Loginmodal from "./Login-modal";
 import Signupmodal from "./Signup-modal";
 import { IUser } from "../contexts/authenticantion.context";
 import { AuthContext } from "../contexts/authenticantion.context";
-import { Spinner } from "react-bootstrap";
+import {ProgressSpinner} from 'primereact/progressspinner';
 
 type Props = {
   user: IUser;
@@ -20,22 +20,20 @@ const Header: React.FC<Props> = ({ children, user, signed, loading }) => {
   const router = useRouter();
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
-
   return (
     <nav className="bg-primarycolor flex flex-col justify-center items-center md:flex-row py-2 px-4 overflow-hidden">
       <span className="bg-primarycolor text-white font-bold text-h6 md:text-h5 md:mr-8">OdontoEasy.</span>
       {loading ? (<div className='spinner mt-1'>
-        <Spinner animation="border" role="status" size="sm">
-        </Spinner>
+      <ProgressSpinner style={{width: 40}} strokeWidth='8'/>
       </div>  
       ) : signed ? (
         <>
           <div className="profile-info">
-            <img
+            {/* <img
               width="60"
               style={{ borderRadius: "50%", marginRight: "0.5rem" }}
               alt="user picture"
-            />
+            /> */}
             <h4>{user.name}</h4>
           </div>
           <div className="left">
@@ -66,6 +64,7 @@ const Header: React.FC<Props> = ({ children, user, signed, loading }) => {
                 Blog
               </a>
             </Link>
+            
           </div>
           <div className="right">
             {/* <Link href="/api/login">
