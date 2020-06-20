@@ -1,30 +1,34 @@
-
-import React, {useState} from 'react';
-import { GetServerSideProps } from 'next'
-import Head from 'next/head';
-import fetch from 'isomorphic-unfetch';
-import Layout from '../components/Layout'
-import Post, { PostProps } from '../components/Post'
-import { NextApiRequest } from 'next'
-import { request } from 'http';
+import React, { useState } from "react";
+import { GetServerSideProps } from "next";
+import Head from "next/head";
+import fetch from "isomorphic-unfetch";
+import Layout from "../components/Layout";
+import Post, { PostProps } from "../components/Post";
+import { NextApiRequest } from "next";
+import { request } from "http";
 
 type Props = {
-  feed: PostProps[]
-}
+  feed: PostProps[];
+};
 
-const HomePage: React.FC<Props> = props => {
- 
+const HomePage: React.FC<Props> = (props) => {
   return (
-      <Layout>
-        <Head>
+    <Layout>
+      <Head>
         <title>Odontoeasy</title>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="Odondology blog" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+          crossOrigin="anonymous"
+        />
       </Head>
       <div className="page">
         <main>
-          {props.feed.map(post => (
+          {props.feed.map((post) => (
             <div key={post.id} className="post">
               <Post post={post} />
             </div>
@@ -47,16 +51,14 @@ const HomePage: React.FC<Props> = props => {
           margin-top: 2rem;
         }
       `}</style>
-      </Layout>  
-  )
-}
+    </Layout>
+  );
+};
 
 export const getServerSideProps: GetServerSideProps = async () => {
-
-
-  const URL = `${process.env.REACT_APP_API_URL}/get/feed`
-    const res = await fetch(URL);
-    const feed = await res.json();
-    return { props: { feed } };
-  }
+  const URL = `${process.env.REACT_APP_API_URL}/get/feed`;
+  const res = await fetch(URL);
+  const feed = await res.json();
+  return { props: { feed } };
+};
 export default HomePage;
