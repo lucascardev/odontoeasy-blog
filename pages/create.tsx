@@ -16,7 +16,6 @@ const Draft: React.FC = () => {
     try {
       const body = { title, content, authorEmail }
       const res = await myapi.post(`${process.env.REACT_APP_API_URL}/posts/create`, body)
-      console.log(res);
       await Router.push('/drafts')
     } catch (error) {
       console.error(error)

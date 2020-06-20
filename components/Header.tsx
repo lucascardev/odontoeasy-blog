@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import theme from "../config/theme";
 import { FaFacebook, FaGoogle, FaLinkedin } from "react-icons/fa";
-import Loginmodal from "./Login-modal";
 import Signupmodal from "./Signup-modal";
 import { IUser } from "../contexts/authenticantion.context";
 import { AuthContext } from "../contexts/authenticantion.context";

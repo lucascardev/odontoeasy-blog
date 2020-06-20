@@ -4,7 +4,6 @@ import Link from 'next/link'
 import Router, {useRouter} from 'next/router'
 import { FaArrowLeft, FaGoogle } from 'react-icons/fa'
 import theme from '../config/theme'
-// import myapi from '../../services/myapi'
 import { AuthContext } from '../contexts/authenticantion.context'
 import Layout from "../components/Layout"
 
@@ -25,7 +24,7 @@ const Login: React.FC<Props> = ({children, title}) => {
     alert('function trigered')
     try {
       const signinresponse = signIn({email, password});
-      console.log('signin response is: '+ signinresponse)
+      // console.log('signin response is: '+ signinresponse)
       Router.push('/')
     } catch (error) {
       console.error(error)
