@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import fetch from "isomorphic-unfetch";
 import Layout from "../components/Layout";
 import Post, { PostProps } from "../components/Post";
-import { NextApiRequest } from "next";
-import { request } from "http";
 
 type Props = {
   feed: PostProps[];
@@ -26,10 +24,11 @@ const HomePage: React.FC<Props> = (props) => {
           crossOrigin="anonymous"
         />
       </Head>
-      <div className="page">
-        <main>
+      <div className="flex flex-1 md:flex-none">
+        <main className="bg-lightred px-3 pt-16 pb-3 md:pt-2 flex flex-col overflow-visible content-center justify-center flex-1 md:overflow-scroll ">
+          <span className="hidden text-h5 text-white font-bold md:flex">Feed</span>
           {props.feed.map((post) => (
-            <div key={post.id} className="post">
+            <div key={post.id} className="post flex-1">
               <Post post={post} />
             </div>
           ))}
@@ -44,10 +43,6 @@ const HomePage: React.FC<Props> = (props) => {
           box-shadow: 1px 1px 3px #aaa;
         }
         .post + .post {
-          margin-top: 2rem;
-        }
-
-        main {
           margin-top: 2rem;
         }
       `}</style>

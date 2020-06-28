@@ -5,7 +5,8 @@ const prisma = new PrismaClient();
 interface ReqBody{
     title: string,
     authorEmail: string,
-    content: string
+    content: string,
+    description: string,
   }
 
   class PostController {
@@ -21,11 +22,12 @@ interface ReqBody{
 
       public async store(req: Request, res: Response): Promise<Response>{
          const { postId } = req.params
-          const { title, authorEmail, content }:ReqBody = req.body;
-          console.log(req.body);
+          const { title, authorEmail, content, description }:ReqBody = req.body;
+
           const result = await prisma.post.create({
               data: { 
                   title: title,
+                  description: description,
                   content: content,
                   author: {
                       connect: {

@@ -1,35 +1,28 @@
-import React, { useState, useContext } from "react";
-import { Modal } from "react-bootstrap";
+import React, { useState, useContext } from "react"
+import { Modal } from "react-bootstrap"
 import Link from 'next/link'
 import Router, {useRouter} from 'next/router'
 import { FaArrowLeft, FaGoogle } from 'react-icons/fa'
 import theme from '../../config/theme'
-// import myapi from '../../services/myapi'
 import { AuthContext } from '../../contexts/authenticantion.context'
 
 type Props = {
-    title: string
+  title: string
 }
 
-const Signupmodal: React.FC<Props> = ({children, title}) => {
-  const { loading } = useContext(AuthContext);
-  const [name, setName] = useState('')
+const Loginmodal: React.FC<Props> = ({children, title}) => {
+  const { signIn, loading } = useContext(AuthContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleSignup = () => setShow(true);
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
+  const handleSignup = () => setShow(true)
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     try {
-      const body = {name, email, password}
-      const res = await fetch(`http://localhost:3000/users/create`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      })
-      const data = await res.json()
+      const signinresponse = signIn({email, password});
+      console.log('signin response is: '+ signinresponse)
       Router.push('/')
     } catch (error) {
       console.error(error)
@@ -45,16 +38,8 @@ const Signupmodal: React.FC<Props> = ({children, title}) => {
         </Modal.Header>
         <Modal.Body style={{background: theme.colors.secondarycolor}} id="modal-body">
           <form onSubmit={submitData}>
-          <h3 className="text-h5 text-white">With email</h3>
+          <span className="text-h5 text-white">With email</span>
           <input
-          required
-          autoFocus
-          onChange={e => setName(e.target.value)}
-          placeholder="Name"
-          type="text"
-          value={name}
-        />
-        <input
           required
           onChange={e => setEmail(e.target.value)}
           placeholder="Email address"
@@ -69,12 +54,12 @@ const Signupmodal: React.FC<Props> = ({children, title}) => {
           value={password}
         />
         <input
-          disabled={!email || !password || !name}
+          disabled={!email || !password}
           type="submit"
           value="Login"
         />
          <hr className="divisor"/>
-        <h3 className="divisor text-h5 text-white">or</h3>
+        <h3 className="divisor text-h5">or</h3>
          <Link href="/api/login">
            <a className="googlesign" >
              <FaGoogle size={25}/>Sign in with Social</a>
@@ -114,7 +99,7 @@ const Signupmodal: React.FC<Props> = ({children, title}) => {
         border: none;
         border-bottom: 0.125rem solid ${theme.colors.white};
       }
-      input[type='text']::placeholder, input[type='password']::placeholder {
+      input[type='text']::placeholder, input[type='password']::placeholder  {
         color: ${theme.colors.white};
       }
       input[type='submit'] {
@@ -194,4 +179,4 @@ const Signupmodal: React.FC<Props> = ({children, title}) => {
   );
 };
 
-export default Signupmodal;
+export default Loginmodal;

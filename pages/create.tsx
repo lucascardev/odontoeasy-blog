@@ -2,19 +2,28 @@ import React, { useState, useContext } from 'react'
 import fetch from 'isomorphic-unfetch'
 import Layout from '../components/Layout'
 import Router from 'next/router'
+import dynamic from 'next/dynamic';
 import myapi from '../services/myapi'
 import { AuthContext } from '../contexts/authenticantion.context'
+import MarkdownIt from 'markdown-it'
+
+
+const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
+  ssr: false
+});
+const mdParser = new MarkdownIt(/* Markdown-it options */);
 
 const Draft: React.FC = () => {
+  const { loading, user, signed } = useContext(AuthContext);
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [description, setDescription] = useState('')
   const [authorEmail, setAuthorEmail] = useState('')
-  const { loading, user, signed } = useContext(AuthContext);
-
+  
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     try {
-      const body = { title, content, authorEmail }
+      const body = { title, content, description, authorEmail }
       const res = await myapi.post(`${process.env.REACT_APP_API_URL}/posts/create`, body)
       await Router.push('/drafts')
     } catch (error) {
@@ -22,12 +31,17 @@ const Draft: React.FC = () => {
     }
   }
 
+  function handleEditorChange({html, text}) {    
+    setContent(html);
+  }
+
   return (
     <Layout>
-      <div>
+      <div className='bg-white flex flex-1 justify-center'>
         <form
+          className='w-full p-8'
           onSubmit={submitData}>
-          <h1>Create Draft</h1>
+          <span className='text-h4'>Create Draft</span>
           <input
             autoFocus
             onChange={e => setTitle(e.target.value)}
@@ -35,37 +49,36 @@ const Draft: React.FC = () => {
             type="text"
             value={title}
           />
+           <input
+            autoFocus
+            onChange={e => setDescription(e.target.value)}
+            placeholder="Description"
+            type="text"
+            value={description}
+          />
           <input
             onChange={e => setAuthorEmail(e.target.value)}
             placeholder="Author (email address)"
             type="text"
             value={authorEmail}
           />
-          <textarea
-            cols={50}
-            onChange={e => setContent(e.target.value)}
-            placeholder="Content"
-            rows={8}
-            value={content}
-          />
+          <MdEditor
+      style={{ height: "500px" }}
+      renderHTML={(text) => mdParser.render(text)}
+      onChange={handleEditorChange}
+    />
           <input
-            disabled={!content ||!title ||!authorEmail}
+            disabled={!content||!description ||!title ||!authorEmail}
             type="submit"
             value="Create"
           />
+           
           <a className="back" href="#" onClick={() => Router.push('/')}>
             or Cancel
           </a>
         </form>
       </div>
       <style jsx>{`
-        .page {
-          background: white;
-          padding: 3rem;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
         input[type='text'],
         textarea {
           width: 100%;

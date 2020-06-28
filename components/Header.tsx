@@ -1,12 +1,13 @@
-import React, { useState, useContext } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import theme from "../config/theme";
-import { FaFacebook, FaGoogle, FaLinkedin } from "react-icons/fa";
-import Signupmodal from "./Signup-modal";
-import { IUser } from "../contexts/authenticantion.context";
-import { AuthContext } from "../contexts/authenticantion.context";
-import {ProgressSpinner} from 'primereact/progressspinner';
+import React, { useState, useContext } from "react"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import theme from "../config/theme"
+import { FaFacebook, FaGoogle, FaLinkedin } from "react-icons/fa"
+import Signupmodal from "./Signup-modal"
+import Loginmodal from './Login-modal'
+import { IUser } from "../contexts/authenticantion.context"
+import { AuthContext } from "../contexts/authenticantion.context"
+import {ProgressSpinner} from 'primereact/progressspinner'
 
 type Props = {
   user: IUser;
@@ -73,9 +74,7 @@ const Header: React.FC<Props> = ({ children, user, signed, loading }) => {
             </Link> */}
             {/* <a onClick={handleShow}>Login</a> */}
             <Signupmodal title="Sign up" />
-            <Link href="/login">
-              <a data-active={isActive("/login")}>Login</a>
-            </Link>
+            <Loginmodal title="Log in" />
             {/* <Loginmodal title="Log in" /> */}
           </div>
         </>

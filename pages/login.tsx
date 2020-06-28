@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react"
-import { Modal } from "react-bootstrap"
 import Link from 'next/link'
 import Router, {useRouter} from 'next/router'
 import { FaArrowLeft, FaGoogle } from 'react-icons/fa'
@@ -21,7 +20,6 @@ const Login: React.FC<Props> = ({children, title}) => {
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault()
-    alert('function trigered')
     try {
       const signinresponse = signIn({email, password});
       // console.log('signin response is: '+ signinresponse)

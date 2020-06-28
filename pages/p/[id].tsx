@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Head from 'next/head';
 import { GetServerSideProps } from 'next'
 import ReactMarkdown from 'react-markdown'
@@ -7,6 +7,7 @@ import fetch from 'isomorphic-unfetch'
 import Router from 'next/router'
 import { PostProps } from '../../components/Post'
 import myapi from '../../services/myapi'
+import { AuthContext } from '../../contexts/authenticantion.context'
 
 async function publish(id: number): Promise<void> {
   const res = await myapi.put(`${process.env.REACT_APP_API_URL}/put/posts/publish/${id}`)
@@ -19,7 +20,7 @@ async function destroy(id: number): Promise<void> {
 }
 
 const Post: React.FC<PostProps> = props => {
-
+  const { loading, user, signed } = useContext(AuthContext);
   const [PostID, setPostID] = useState(props.id);
  
   let title = props.title
@@ -36,10 +37,12 @@ const Post: React.FC<PostProps> = props => {
         {/* <meta name="description" content=""> */}
         <meta name="keywords" content="odontology, odontologia, post" />
       </Head>
-      <div>
-        <h2>{title}</h2>
-        <p>By {props?.author?.name || 'Unknown author'}</p>
-        <ReactMarkdown source={props.content} />
+      <div className="bg-lightred flex flex-1 flex-col p-8">
+        <h2 className="text-h6 flex flex-1 text-white">{title}</h2>
+        <p className="text-white">By {props?.author?.name || 'Unknown author'}</p>
+        <div className="bg-white py-8 px-1 my-8">
+        <ReactMarkdown source={props.content} escapeHtml={false} />
+        </div>
         {!props.published && (
           <button onClick={()=> publish(props.id)}>
             Publish

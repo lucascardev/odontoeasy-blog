@@ -3,19 +3,24 @@ import Router from "next/router";
 import ReactMarkdown from "react-markdown";
 import theme from "../config/theme";
 import { FiEye } from "react-icons/fi";
+import moment from 'moment';
 
 export type PostProps = {
   id: number;
   title: string;
+  description: string;
   author: {
     name: string;
   };
+  createdAt: Date;
   content: string;
   published: boolean;
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
-  const authorName = post.author ? post.author.name : "Unknown author";
+  const authorName = post.author ? post.author.name : "Unknown author"
+  const createdAt = post.createdAt
+  const dateformated = moment(createdAt).toDate().toDateString();
   return (
     <>
       <header className="post-header">
@@ -24,13 +29,16 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
           <small>
           By {authorName}
         </small>
+        <small>
+        Created at {dateformated} 
+        </small>
         </div>
         <span className="link" onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}>
           <FiEye size={26} />
         </span>
       </header>
-      <div className="post-content">
-        <ReactMarkdown source={post.content} />
+      <div className="post-description">
+        <ReactMarkdown source={post.description} />
       </div>
       <style jsx>{`
         div {
@@ -72,7 +80,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
           transition: 0.2s;
           color: ${theme.colors.primarycolor};
         }
-        .post-content {
+        .post-description {
             padding: 2rem;
         }
       `}</style>
