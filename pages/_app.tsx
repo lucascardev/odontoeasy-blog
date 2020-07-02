@@ -1,9 +1,9 @@
 import { AppProps } from 'next/app'
 import '../styles/index.css'
-import 'primereact/resources/themes/nova-light/theme.css'
-import 'primereact/resources/primereact.min.css'
+import '../styles/theme.css'
+import '../styles/primereact.css'
 import 'primeicons/primeicons.css'
-import 'react-markdown-editor-lite/lib/index.css';
+import '../styles/reactmarkdowneditor.css';
 import {AuthProvider} from '../contexts/authenticantion.context'
 
 
