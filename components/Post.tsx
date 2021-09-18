@@ -11,6 +11,7 @@ export type PostProps = {
   description: string;
   author: {
     name: string;
+    email: string;
   };
   createdAt: Date;
   content: string;
@@ -25,7 +26,8 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
     <>
       <header className="post-header">
         <div className="post-info">
-          <h2 className="post-title">{post.title}</h2>
+          <span className="post-title">{post.title}</span>
+          <span className="post-description"> <ReactMarkdown source={post.description} /></span>
           <small>
           By {authorName}
         </small>
@@ -37,9 +39,6 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
           <FiEye size={26} />
         </span>
       </header>
-      <div className="post-description">
-        <ReactMarkdown source={post.description} />
-      </div>
       <style jsx>{`
         div {
           color: inherit;
@@ -62,6 +61,11 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         }
         .post-title {
           color: ${theme.colors.white};
+          font-size: 1.4em;
+        }
+        .post-description {
+          color: ${theme.colors.white};
+          font-size: 1em;
         }
         .link-holder {
             
@@ -79,9 +83,6 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
           background: ${theme.colors.white};
           transition: 0.2s;
           color: ${theme.colors.primarycolor};
-        }
-        .post-description {
-            padding: 2rem;
         }
       `}</style>
     </>

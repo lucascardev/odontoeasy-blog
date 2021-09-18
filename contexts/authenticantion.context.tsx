@@ -6,6 +6,7 @@ import Router from 'next/router'
 type IUser = {
   id: number,
   name: string,
+  email: string,
   scopes: string[]
 }
 

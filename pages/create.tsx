@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import myapi from '../services/myapi'
 import { AuthContext } from '../contexts/authenticantion.context'
 import MarkdownIt from 'markdown-it'
+import Error from './_error'
 
 
 const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
@@ -18,7 +19,7 @@ const Draft: React.FC = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [description, setDescription] = useState('')
-  const [authorEmail, setAuthorEmail] = useState('')
+  const [authorEmail, setAuthorEmail] = useState(user?.email)
   
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -37,7 +38,8 @@ const Draft: React.FC = () => {
 
   return (
     <Layout>
-      <div className='bg-white flex flex-1 justify-center'>
+      { signed ? <>
+      <div className='bg-white flex flex-1 justify-center items-center'>
         <form
           className='w-full p-8'
           onSubmit={submitData}>
@@ -92,10 +94,11 @@ const Draft: React.FC = () => {
           border: 0;
           padding: 1rem 2rem;
         }
-        .back {
+        .back {u
           margin-left: 1rem;
         }
-      `}</style>
+      `}</style>u
+    </> : <div className='bg-white flex flex-1 justify-center items-center'><Error statusCode={403} /></div>}
     </Layout>
   )
 }

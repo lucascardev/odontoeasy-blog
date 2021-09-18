@@ -26,7 +26,7 @@ class SessionController {
       return res.status(400).send("Empty request");
     }
 
-    const payload = await prisma.user.findOne({
+    const payload = await prisma.user.findUnique({
       where: {
         email: email
       },
@@ -39,7 +39,7 @@ class SessionController {
       const JWTData = {
         // exp: Math.floor(Date.now() / 1000) + LOGIN_EXPIRATION_TIME,
         iss: "odonto-easy",
-        sub: { userid: payload.id, name: payload.name, auth: true },
+        sub: { userid: payload.id, name: payload.name, email: payload.email, auth: true },
         scopes: [ payload.name ]
       };
 

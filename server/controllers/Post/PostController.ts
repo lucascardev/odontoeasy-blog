@@ -13,7 +13,7 @@ interface ReqBody{
 
       public async index(req: Request, res: Response): Promise<Response>{
         const { postId } = req.params
-        const post = await prisma.post.findOne({
+        const post = await prisma.post.findUnique({
             where: { id: Number(postId) },
             include: { author: true },
           })

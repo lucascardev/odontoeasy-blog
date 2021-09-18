@@ -8,6 +8,7 @@ import Router from 'next/router'
 import { PostProps } from '../../components/Post'
 import myapi from '../../services/myapi'
 import { AuthContext } from '../../contexts/authenticantion.context'
+import { ppid } from 'process';
 
 async function publish(id: number): Promise<void> {
   const res = await myapi.put(`${process.env.REACT_APP_API_URL}/put/posts/publish/${id}`)
@@ -38,9 +39,10 @@ const Post: React.FC<PostProps> = props => {
         <meta name="keywords" content="odontology, odontologia, post" />
       </Head>
       <div className="bg-lightred flex flex-1 flex-col p-8">
-        <h2 className="text-h6 flex flex-1 text-white">{title}</h2>
-        <p className="text-white">By {props?.author?.name || 'Unknown author'}</p>
-        <div className="bg-white py-8 px-1 my-8">
+        <h2 className="text-h5 flex flex-1 text-white">{title}</h2>
+        <h2 className="text-h8 flex flex-1 text-white">{props.description}</h2>
+        <p className="text-h9 text-white">By {props?.author?.name || 'Unknown author'}</p>
+        <div className="bg-white py-8 px-5 my-8">
         <ReactMarkdown source={props.content} escapeHtml={false} />
         </div>
         {!props.published && (
@@ -48,9 +50,10 @@ const Post: React.FC<PostProps> = props => {
             Publish
           </button>
         )}
-        <button onClick={()=> destroy(props.id)}>
+        {signed && (user?.email === props?.author?.email) && <button onClick={()=> destroy(props.id)}>
           Delete
-        </button>
+        </button>}
+       
       </div>
       <div id="disqus_thread"></div>
       <style jsx>{`
