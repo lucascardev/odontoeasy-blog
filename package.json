@@ -24,7 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "markdown-it": "^12.0.4",
     "moment": "^2.29.1",
-    "mongoose": "^5.11.17",
+    "mongoose": "^5.13.15",
     "next": "10.0.7",
     "primeicons": "^4.1.0",
     "primereact": "^6.0.2",
